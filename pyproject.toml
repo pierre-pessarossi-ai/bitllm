@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "bitllm"
+version = "0.1.0"
+description = "An implementation of BitLLM"
+authors = ["Pierre Pessarossi <pierre.pessarossi@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.11"
+
+[tool.poetry.dev-dependencies]
+mypy = "^1.10.1"
+pre-commit = "*"
+pytest = "^8.2.2"
+python-dotenv = "*"
+ruff = "^0.5.1"
+
+[build-system]
+requires = ["poetry>=1.8.3"]
+build-backend = "poetry.masonry.api"
+
+[tool.ruff]
+fix = true
+select = ["E", "F", "I", "B", "S"]
+line-length = 120
+ignore = [
+]
+
+[tool.ruff.isort]
+force-single-line = true
+
+[tool.mypy]
