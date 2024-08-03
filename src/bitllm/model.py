@@ -6,6 +6,26 @@ class DimensionError(Exception):
     pass
 
 
+def clip_activation(x: torch.Tensor, a: float, b: float) -> torch.Tensor:
+    x[x > b] = b
+    x[x < a] = a
+    return x
+
+
+def compute_infinity_norm(x: torch.Tensor) -> torch.Tensor:
+    if len(x.size()) != 3:
+        raise DimensionError("Expecting an activation of size Batch * Context Length * Model dim")
+    return torch.amax(torch.abs(x), dim=(1, 2))
+
+
+def _compute_quantization_range(b_bit_precision: int) -> torch.Tensor:
+    return torch.tensor([-(2 ** (b_bit_precision - 1)), 2 ** (b_bit_precision - 1)])
+
+
+# def quantize_activation(x: torch.Tensor, b_bit_precision: int = 8, floor: Optional[int] = None) -> torch.Tensor:
+#     pass
+
+
 class BitLinear(nn.Module):
     def __init__(self) -> None:
         super().__init__()
